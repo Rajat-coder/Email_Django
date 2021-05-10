@@ -17,6 +17,7 @@ class User(AbstractUser):
         (GENDER.OTHER,"Other")
     )
     gender_type=models.PositiveIntegerField(choices=GENDER_TYPE,default=GENDER.MALE)
+    mobile=models.CharField(max_length=15,null=True,blank=True)
     otp_code=models.CharField(max_length=255,null=True,blank=True)
     otp_created_at=models.DateTimeField(default=timezone.now)
     country=CountryField(null=True,blank=True)

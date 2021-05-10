@@ -141,4 +141,25 @@ class ChangePasswordView(APIView):
         }
         return Response(context,status=res_status)
 
+class ChangePasswordOTPView(APIView):
+    def post(self,request):
+        user=request.user
+        output_status=False
+        output_detail="Falied"
+        res_status=status.HTTP_400_BAD_REQUEST
+        user_mobile=request.data.get("mobile",None)
+        if user.mobile == user_mobile:
+            code=otpgenerator(user)
+            send_otp(user, code)
+            output_status=True
+            output_detail="Opt send to your verified mobile"
+            res_status=status.HTTP_200_OK
+        else:
+            output_detail="Wrong number"
+        context={
+            "status":output_status,
+            "detail":output_detail
+        }    
+        return Response(context,status=res_status)
+
 
