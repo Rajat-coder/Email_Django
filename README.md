@@ -7,5 +7,5 @@ You change change your password by sending otp to email or phone sms or by chang
 2 - virtualenv venu                                                                                           
 3 - venu/script/activate                                                                                                                       
 4 - pip install -r requirements.txt                                                                                                            
-5 - get your api and secret key from vonage website and save it into your django myproject.settings.py
+5 - get your api and secret key from vonage website and save it into your django myproject.settings.py                                                                     
 6 - python manage.py runserver
