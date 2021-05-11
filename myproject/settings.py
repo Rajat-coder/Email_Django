@@ -14,6 +14,8 @@ from decouple import config
 from datetime import timedelta
 from pathlib import Path
 
+import vonage
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
@@ -149,6 +151,9 @@ BACKEND_API_KEY = [
     for key in config('BACKEND_API_KEY', default='R786').split(',')
     if key
 ]
+
+VONAGE_API_KEY=["Enter your vonage api key here"]
+VONAGE_SECRET_KEY=["Enter your vonage secret key here"]
 
 
 # Static files (CSS, JavaScript, Images)

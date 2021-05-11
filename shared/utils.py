@@ -4,7 +4,8 @@ from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from random import randint
-from twilio.rest import Client
+import vonage
+from myproject.settings import *
 
 
 def get_token(user):
@@ -36,14 +37,18 @@ def otpgenerator(user):
     user.save()
     return code
 
-account_sid = 'ACfea01c3e282586f6691ecd76c924ad3d'
-auth_token = '01e05a983b6292dc5d8a1ae8c3fc9054'
-client = Client(account_sid, auth_token)
 
 def send_otp(user,code):
-    message = client.messages \
-                .create(
-                     body=f"Your one-time-password is {code} ",
-                     from_='+14152345708',
-                     to=f'+91{user.mobile}'
-                 )
+    client = vonage.Client(key=settings.VONAGE_API_KEY, secret=settings.VONAGE_SECRET_KEY)
+    sms = vonage.Sms(client)
+    responseData = sms.send_message(
+        {
+            "from": "Vonage APIs",
+            "to": f"91{user.mobile}",
+            "text": f"Your One-Time_verification Code is {code} ",
+        }
+    )
+    if responseData["messages"][0]["status"] == "0":
+        print("Message sent successfully.")
+    else:
+        print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
